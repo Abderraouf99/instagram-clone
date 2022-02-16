@@ -64,22 +64,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<PostWidget> posts = [
     const PostWidget(
-      userProfileURL: '',
-      userName: 'Celine',
-      postURL: '',
-      postBio: '',
+      userProfileURL:
+          'https://firebasestorage.googleapis.com/v0/b/studentcompanion-a4a11.appspot.com/o/default-avatars%2Favatar-random2.png?alt=media&token=173c18c3-8b7b-4b21-8949-78b57e7247d5',
+      userName: 'Céline',
+      postURL:
+          'https://images.pexels.com/photos/11082557/pexels-photo-11082557.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+      postBio: 'Beautiful horse found in Pexels.com',
     ),
     const PostWidget(
-      userProfileURL: '',
-      userName: 'Celine',
-      postURL: '',
-      postBio: '',
+      userProfileURL:
+          'https://firebasestorage.googleapis.com/v0/b/studentcompanion-a4a11.appspot.com/o/default-avatars%2Favatar-random6.png?alt=media&token=2b0a0e2a-35ff-44fb-a420-ffbc60960453',
+      userName: 'Mirabelle',
+      postURL:
+          'https://images.pexels.com/photos/10980216/pexels-photo-10980216.jpeg?cs=srgb&dl=pexels-sasha-prasastika-10980216.jpg&fm=jpg',
+      postBio: 'Beautiful architecture found in Pexels.com',
     ),
     const PostWidget(
-      userProfileURL: '',
-      userName: 'Celine',
-      postURL: '',
-      postBio: '',
+      userProfileURL:
+          'https://firebasestorage.googleapis.com/v0/b/studentcompanion-a4a11.appspot.com/o/default-avatars%2Favatar-random4.png?alt=media&token=14ea36b1-bfba-4866-8a92-9081419acdc2',
+      userName: 'Julie',
+      postURL:
+          'https://images.pexels.com/photos/10989590/pexels-photo-10989590.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+      postBio: 'Beautiful mountain picture found in Pexels.com',
     )
   ];
   @override

@@ -3,7 +3,7 @@ import 'package:instagram_clone/constants.dart';
 import 'package:instagram_clone/widgets/story_bubble.dart';
 import 'dart:math';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final String userProfileURL;
   final String userName;
   final String postURL;
@@ -17,6 +17,22 @@ class PostWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget>
+    with SingleTickerProviderStateMixin {
+  bool _isLiked = false;
+  bool _isSaved = false;
+  bool _showOverlayLike = false;
+  double likeOverlaySize = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,23 +41,22 @@ class PostWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              children: const [
+              children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 10),
                   child: StoryPreviewBubble(
-                    userProfileImage:
-                        'https://firebasestorage.googleapis.com/v0/b/studentcompanion-a4a11.appspot.com/o/default-avatars%2Favatar-random0.png?alt=media&token=e5ada3b1-809f-4ea5-8f83-35e0eafac2cd',
+                    userProfileImage: widget.userProfileURL,
                     isSeen: false,
                     userName: 'Your story',
                     size: 'small',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  'Céline',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  widget.userName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -57,9 +72,30 @@ class PostWidget extends StatelessWidget {
         SizedBox(
           height: 360,
           width: double.infinity,
-          child: Image.network(
-            'https://images.pexels.com/photos/11082557/pexels-photo-11082557.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-            fit: BoxFit.cover,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.network(
+                widget.postURL,
+                fit: BoxFit.cover,
+              ),
+              _showOverlayLike
+                  ? AnimatedContainer(
+                      duration: const Duration(
+                        milliseconds: 250,
+                      ),
+                      width: _showOverlayLike ? 100 : 32,
+                      height: _showOverlayLike ? 100 : 32,
+                      child: Icon(
+                        Icons.favorite,
+                        size: _showOverlayLike ? 100 : 32,
+                        color: Colors.white.withOpacity(
+                          0.7,
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
           ),
         ),
         Row(
@@ -69,9 +105,25 @@ class PostWidget extends StatelessWidget {
               children: [
                 IconButton(
                   splashRadius: 1,
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite_border_outlined,
+                  onPressed: () {
+                    setState(() {
+                      _isLiked = !_isLiked;
+                      if (_isLiked) {
+                        _showOverlayLike = true;
+                        likeOverlaySize = 100;
+                      }
+                    });
+                    if (_isLiked) {
+                      Future.delayed(const Duration(seconds: 2), () {
+                        setState(() {
+                          _showOverlayLike = false;
+                        });
+                      });
+                    }
+                  },
+                  icon: Icon(
+                    _isLiked ? Icons.favorite : Icons.favorite_border_outlined,
+                    color: _isLiked ? Colors.red : Colors.black,
                   ),
                 ),
                 IconButton(
@@ -138,19 +190,19 @@ class PostWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 15.0),
           child: RichText(
-            text: const TextSpan(
-              style: TextStyle(
+            text: TextSpan(
+              style: const TextStyle(
                 color: Colors.black,
               ),
               children: [
                 TextSpan(
-                  text: 'Céline ',
-                  style: TextStyle(
+                  text: '${widget.userName} ',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 TextSpan(
-                  text: 'Beautiful horse picture found at Pexels.com.',
+                  text: widget.postBio,
                 )
               ],
             ),
