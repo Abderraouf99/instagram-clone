@@ -32,6 +32,23 @@ class _PostWidgetState extends State<PostWidget>
     super.initState();
   }
 
+  void _onLike() {
+    setState(() {
+      _isLiked = !_isLiked;
+      if (_isLiked) {
+        _showOverlayLike = true;
+        likeOverlaySize = 100;
+      }
+    });
+    if (_isLiked) {
+      Future.delayed(const Duration(seconds: 2), () {
+        setState(() {
+          _showOverlayLike = false;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -75,9 +92,12 @@ class _PostWidgetState extends State<PostWidget>
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.network(
-                widget.postURL,
-                fit: BoxFit.cover,
+              GestureDetector(
+                onDoubleTap: _onLike,
+                child: Image.network(
+                  widget.postURL,
+                  fit: BoxFit.cover,
+                ),
               ),
               _showOverlayLike
                   ? AnimatedContainer(
@@ -94,7 +114,7 @@ class _PostWidgetState extends State<PostWidget>
                         ),
                       ),
                     )
-                  : Container()
+                  : Container(),
             ],
           ),
         ),
@@ -105,22 +125,7 @@ class _PostWidgetState extends State<PostWidget>
               children: [
                 IconButton(
                   splashRadius: 1,
-                  onPressed: () {
-                    setState(() {
-                      _isLiked = !_isLiked;
-                      if (_isLiked) {
-                        _showOverlayLike = true;
-                        likeOverlaySize = 100;
-                      }
-                    });
-                    if (_isLiked) {
-                      Future.delayed(const Duration(seconds: 2), () {
-                        setState(() {
-                          _showOverlayLike = false;
-                        });
-                      });
-                    }
-                  },
+                  onPressed: _onLike,
                   icon: Icon(
                     _isLiked ? Icons.favorite : Icons.favorite_border_outlined,
                     color: _isLiked ? Colors.red : Colors.black,
@@ -147,9 +152,13 @@ class _PostWidgetState extends State<PostWidget>
             ),
             IconButton(
               splashRadius: 1,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.bookmark_add_outlined,
+              onPressed: () {
+                setState(() {
+                  _isSaved = !_isSaved;
+                });
+              },
+              icon: Icon(
+                _isSaved ? Icons.bookmark : Icons.bookmark_add_outlined,
               ),
             ),
           ],
