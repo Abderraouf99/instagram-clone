@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/constants.dart';
 import 'package:instagram_clone/widgets/story_bubble.dart';
+import 'dart:math';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({Key? key}) : super(key: key);
+  final String userProfileURL;
+  final String userName;
+  final String postURL;
+  final String postBio;
+  const PostWidget({
+    Key? key,
+    required this.userProfileURL,
+    required this.userName,
+    required this.postURL,
+    required this.postBio,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +46,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
             IconButton(
+              splashRadius: kNoSplashButton,
               onPressed: () {},
               icon: const Icon(
                 Icons.more_horiz_outlined,
@@ -71,8 +84,11 @@ class PostWidget extends StatelessWidget {
                 IconButton(
                   splashRadius: 1,
                   onPressed: () {},
-                  icon: const Icon(
-                    Icons.ios_share_sharp,
+                  icon: Transform.rotate(
+                    angle: -pi / 4,
+                    child: const Icon(
+                      Icons.send_outlined,
+                    ),
                   ),
                 ),
               ],
@@ -86,19 +102,58 @@ class PostWidget extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 15.0),
-          child: Text(
-            'Liked by Ahmed, Julie and others',
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: RichText(
+            text: const TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+              ),
+              children: [
+                TextSpan(
+                  text: 'Liked by ',
+                ),
+                TextSpan(
+                  text: 'Ahmed',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: ' and ',
+                ),
+                TextSpan(
+                  text: 'others',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(
           height: 5,
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 15.0),
-          child: Text(
-            'Céline Beautiful horse picture found at Pexels.com.',
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: RichText(
+            text: const TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+              ),
+              children: [
+                TextSpan(
+                  text: 'Céline ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Beautiful horse picture found at Pexels.com.',
+                )
+              ],
+            ),
           ),
         ),
         const SizedBox(

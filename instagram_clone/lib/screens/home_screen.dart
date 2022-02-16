@@ -63,9 +63,24 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   final List<PostWidget> posts = [
-    const PostWidget(),
-    const PostWidget(),
-    const PostWidget()
+    const PostWidget(
+      userProfileURL: '',
+      userName: 'Celine',
+      postURL: '',
+      postBio: '',
+    ),
+    const PostWidget(
+      userProfileURL: '',
+      userName: 'Celine',
+      postURL: '',
+      postBio: '',
+    ),
+    const PostWidget(
+      userProfileURL: '',
+      userName: 'Celine',
+      postURL: '',
+      postBio: '',
+    )
   ];
   @override
   Widget build(BuildContext context) {

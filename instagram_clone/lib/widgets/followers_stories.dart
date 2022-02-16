@@ -7,7 +7,15 @@ class FollowersStories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade300,
+            width: 0.5,
+          ),
+        ),
+      ),
       padding: const EdgeInsets.only(left: 8.0),
       child: SizedBox(
         height: 100,
