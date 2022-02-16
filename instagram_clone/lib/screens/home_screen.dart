@@ -76,11 +76,30 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const TopBar(),
-            FollowersStories(stories: stories),
-            const Divider(
-              height: 0,
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    expandedHeight: 100,
+                    collapsedHeight: 100,
+                    floating: false,
+                    flexibleSpace: SizedBox(
+                      height: 100,
+                      child: FollowersStories(stories: stories),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return posts[index];
+                      },
+                      childCount: posts.length,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            FeedWidget(posts: posts),
           ],
         ),
       ),
