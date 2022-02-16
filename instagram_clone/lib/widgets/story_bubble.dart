@@ -4,12 +4,13 @@ class StoryPreviewBubble extends StatefulWidget {
   final String userProfileImage;
   final bool isSeen;
   final String userName;
-
+  final String size;
   // ignore: use_key_in_widget_constructors
   const StoryPreviewBubble({
     required this.userProfileImage,
     required this.isSeen,
     required this.userName,
+    required this.size,
   });
 
   @override
@@ -43,8 +44,8 @@ class _StoryPreviewBubbleState extends State<StoryPreviewBubble> {
             shape: BoxShape.circle,
           ),
           child: Container(
-            width: 65,
-            height: 65,
+            width: widget.size == 'normal' ? 65 : 25,
+            height: widget.size == 'normal' ? 65 : 25,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
@@ -62,13 +63,15 @@ class _StoryPreviewBubbleState extends State<StoryPreviewBubble> {
         const SizedBox(
           height: 5,
         ),
-        Text(
-          widget.userName,
-          style: TextStyle(
-            color: widget.isSeen ? Colors.grey : Colors.black,
-            fontSize: 10,
-          ),
-        ),
+        widget.size == 'normal'
+            ? Text(
+                widget.userName,
+                style: TextStyle(
+                  color: widget.isSeen ? Colors.grey : Colors.black,
+                  fontSize: 10,
+                ),
+              )
+            : Container(),
       ],
     );
   }
