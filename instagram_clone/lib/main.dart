@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/screens/home_screen.dart';
+import 'package:instagram_clone/screens/app_page_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Instagram Clone',
       theme: ThemeData(),
-      home: const MyHomePage(
-        title: 'Instagram',
-      ),
+      home: const AppPageView(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_clone/constants.dart';
 import 'package:instagram_clone/widgets/story_bubble.dart';
 import 'dart:math';
@@ -66,6 +67,7 @@ class _PostWidgetState extends State<PostWidget>
                     isSeen: false,
                     userName: 'Your story',
                     size: 'small',
+                    showText: false,
                   ),
                 ),
                 const SizedBox(
@@ -92,11 +94,13 @@ class _PostWidgetState extends State<PostWidget>
           child: Stack(
             fit: StackFit.expand,
             children: [
-              GestureDetector(
-                onDoubleTap: _onLike,
-                child: Image.network(
-                  widget.postURL,
-                  fit: BoxFit.cover,
+              InteractiveViewer(
+                child: GestureDetector(
+                  onDoubleTap: _onLike,
+                  child: Image.network(
+                    widget.postURL,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               _showOverlayLike
@@ -135,17 +139,14 @@ class _PostWidgetState extends State<PostWidget>
                   splashRadius: 1,
                   onPressed: () {},
                   icon: const Icon(
-                    Icons.comment,
+                    FontAwesomeIcons.comment,
                   ),
                 ),
                 IconButton(
                   splashRadius: 1,
                   onPressed: () {},
-                  icon: Transform.rotate(
-                    angle: -pi / 4,
-                    child: const Icon(
-                      Icons.send_outlined,
-                    ),
+                  icon: const Icon(
+                    FontAwesomeIcons.paperPlane,
                   ),
                 ),
               ],

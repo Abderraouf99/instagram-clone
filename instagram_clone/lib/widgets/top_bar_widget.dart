@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({Key? key}) : super(key: key);
+  const TopBar({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class TopBar extends StatelessWidget {
                 splashRadius: 1,
                 onPressed: () {},
                 icon: const Icon(
-                  Icons.message_sharp,
+                  FontAwesomeIcons.facebookMessenger,
                 ),
               )
             ],
