@@ -14,17 +14,30 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController controller;
-
+  late CameraDescription currentCamera;
   @override
   void initState() {
     super.initState();
-    controller = CameraController(widget.cameras[0], ResolutionPreset.max);
+    currentCamera = widget.cameras[0];
+    controller = CameraController(currentCamera, ResolutionPreset.max);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
       }
       setState(() {});
     });
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // App state changed before we got the chance to initialize.
+    if (controller == null || !controller.value.isInitialized) {
+      return;
+    }
+    if (state == AppLifecycleState.inactive) {
+      controller.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      controller = CameraController(currentCamera, ResolutionPreset.max);
+    }
   }
 
   @override
@@ -43,23 +56,26 @@ class _CameraScreenState extends State<CameraScreen> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  CameraPreview(
-                    controller,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          margin: const EdgeInsets.only(
-                            bottom: 20,
-                          ),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 5,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CameraPreview(
+                      controller,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            margin: const EdgeInsets.only(
+                              bottom: 20,
+                            ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 5,
+                              ),
                             ),
                           ),
                         ),
@@ -75,6 +91,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             IconButton(
+                              splashRadius: 1,
                               onPressed: () {},
                               icon: const Icon(
                                 Icons.close,
@@ -83,6 +100,7 @@ class _CameraScreenState extends State<CameraScreen> {
                               ),
                             ),
                             IconButton(
+                              splashRadius: 1,
                               onPressed: () {},
                               icon: const Icon(
                                 Icons.flash_off,
@@ -91,6 +109,7 @@ class _CameraScreenState extends State<CameraScreen> {
                               ),
                             ),
                             IconButton(
+                              splashRadius: 1,
                               onPressed: () {},
                               icon: const Icon(
                                 Icons.settings,
@@ -113,6 +132,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
+                    splashRadius: 1,
                     onPressed: () {},
                     icon: const Icon(
                       Icons.photo_album,

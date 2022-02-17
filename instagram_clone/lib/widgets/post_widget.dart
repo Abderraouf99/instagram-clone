@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_clone/constants.dart';
+import 'package:instagram_clone/screens/comments_screen.dart';
 import 'package:instagram_clone/widgets/story_bubble.dart';
 import 'dart:math';
 
@@ -137,7 +138,14 @@ class _PostWidgetState extends State<PostWidget>
                 ),
                 IconButton(
                   splashRadius: 1,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CommentScreen(),
+                      ),
+                    );
+                  },
                   icon: const Icon(
                     FontAwesomeIcons.comment,
                   ),
